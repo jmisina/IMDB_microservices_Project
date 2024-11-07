@@ -1,22 +1,22 @@
 services:
-  # orders-service:
+  # products-service:
   #   build: ./
-  #   container_name: orders-service
-  #   hostname: orders-service
+  #   container_name: products-service
+  #   hostname: products-service
   #   env_file:
   #     - ./.env
   #   ports:
   #     - 5000:5000
-  #   image: orders-service
+  #   image: products-service
   #   depends_on:
-  #     orders_pgdb:
+  #     products_pgdb:
   #       condition: service_healthy
   #   networks:
-  #     - orders_net
+  #     - products_net
 
-  orders_pgdb:
-    container_name: orders_pgdb
-    hostname: orders_pgdb
+  products_pgdb:
+    container_name: products_pgdb
+    hostname: products_pgdb
     image: postgres:16.2-alpine
     command: postgres -c 'max_connections=200'
     healthcheck:
@@ -26,20 +26,20 @@ services:
       retries: 10
     environment:
       POSTGRES_PASSWORD: admin
-      POSTGRES_USER: orders
+      POSTGRES_USER: products
       PGPASSWORD: admin
-      PGUSER: orders
-      PGDATABASE: ordersdb
+      PGUSER: products
+      PGDATABASE: productsdb
     ports:
       - "5432:5432"
     volumes:
       - ./docker/postgresql:/data
       - ./docker/postgresql-init:/docker-entrypoint-initdb.d
     networks:
-      - orders_net
+      - products_net
 
 networks:
-  orders_net:
+  products_net:
     driver: bridge
     ipam:
       config:

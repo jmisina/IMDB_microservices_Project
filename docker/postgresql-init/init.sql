@@ -1,3 +1,3 @@
-CREATE DATABASE ordersdb;
-GRANT ALL PRIVILEGES ON DATABASE ordersdb TO orders;
-ALTER DATABASE ordersdb OWNER TO orders;
+CREATE DATABASE productsdb;
+GRANT ALL PRIVILEGES ON DATABASE productsdb TO products;
+ALTER DATABASE productsdb OWNER TO products;
