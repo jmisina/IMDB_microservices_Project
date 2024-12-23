@@ -12,10 +12,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Products-msvc/ProductsAPI/ProductsAPI.csproj", "Products-msvc/ProductsAPI/"]
+COPY ["./Products-msvc/ProductsAPI/ProductsAPI.csproj", "./Products-msvc/ProductsAPI/"]
 RUN dotnet restore "./Products-msvc/ProductsAPI/ProductsAPI.csproj"
 COPY . .
-WORKDIR "/src/Products-msvc/ProductsAPI"
+WORKDIR "./Products-msvc/ProductsAPI"
 RUN dotnet build "./ProductsAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Ten etap służy do publikowania projektu usługi do skopiowania do etapu końcowego

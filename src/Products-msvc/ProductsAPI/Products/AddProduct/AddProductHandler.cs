@@ -1,15 +1,27 @@
-﻿using MediatR;
-
+﻿
 namespace ProductsAPI.Products.AddProduct
 {
-    public record AddProductCommand(string Name, string Description,decimal Price, decimal Weight, int Stock, List<string> Category) : IRequest<AddProductResult>;
+    public record AddProductCommand(string Name, string Description,decimal Price, decimal Weight, int Stock, List<string> Category) : ICommand<AddProductResult>;
 
     public record AddProductResult(Guid Id);
-    internal class AddProductCommandHandler : IRequestHandler<AddProductCommand, AddProductResult>
+    internal class AddProductCommandHandler (IDocumentSession session): ICommandHandler<AddProductCommand, AddProductResult>
     {
-        public Task<AddProductResult> Handle(AddProductCommand request, CancellationToken cancellationToken)
+        public async Task<AddProductResult> Handle(AddProductCommand command, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var product = new Product
+            {
+                Name = command.Name,
+                Description = command.Description,
+                Price = command.Price,
+                Weight = command.Weight,
+                Stock = command.Stock,
+                Category = command.Category
+            };
+
+            session.Store(product);
+            await session.SaveChangesAsync(cancellationToken);
+
+            return new AddProductResult(product.Id);
         }
     }
 }

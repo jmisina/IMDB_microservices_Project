@@ -1,18 +1,18 @@
-services:
-  # products-service:
-  #   build: ./
-  #   container_name: products-service
-  #   hostname: products-service
-  #   env_file:
-  #     - ./.env
-  #   ports:
-  #     - 5000:5000
-  #   image: products-service
-  #   depends_on:
-  #     products_pgdb:
-  #       condition: service_healthy
-  #   networks:
-  #     - products_net
+services:  
+  products-service:
+     build: ./
+     container_name: products-service
+     hostname: products-service
+     env_file:
+       - ./.env 
+     ports:
+       - 8080:8081
+     image: products-service
+     depends_on:
+      products_pgdb:
+         condition: service_healthy
+     networks:
+        - products_net
 
   products_pgdb:
     container_name: products_pgdb
