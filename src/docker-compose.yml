@@ -1,46 +1,13 @@
-services:  
-  products-service:
-     build: ./
-     container_name: products-service
-     hostname: products-service
-     env_file:
-       - ./.env 
-     ports:
-       - 8080:8081
-     image: products-service
-     depends_on:
-      products_pgdb:
-         condition: service_healthy
-     networks:
-        - products_net
+services:
+
+  productsapi:
+    image: ${DOCKER_REGISTRY-}productsapi
+    build:
+      context: .
+      dockerfile: Products-msvc/ProductsAPI/Dockerfile
+
 
   products_pgdb:
-    container_name: products_pgdb
-    hostname: products_pgdb
-    image: postgres:16.2-alpine
-    command: postgres -c 'max_connections=200'
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
-      interval: 1s
-      timeout: 5s
-      retries: 10
-    environment:
-      POSTGRES_PASSWORD: admin
-      POSTGRES_USER: products
-      PGPASSWORD: admin
-      PGUSER: products
-      PGDATABASE: productsdb
-    ports:
-      - "5433:5433"
-    volumes:
-      - ./docker/postgresql:/data
-      - ./docker/postgresql-init:/docker-entrypoint-initdb.d
-    networks:
-      - products_net
 
-networks:
-  products_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.12.0/24
+    image: postgres:16.2-alpine
+    
