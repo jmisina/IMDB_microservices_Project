@@ -4,10 +4,17 @@ services:
     image: ${DOCKER_REGISTRY-}productsapi
     build:
       context: .
-      dockerfile: Products-msvc/ProductsAPI/Dockerfile
+      dockerfile: Services/ProductsAPI/Dockerfile
 
 
   products_pgdb:
 
     image: postgres:16.2-alpine
     
+
+  yarpapigateway:
+    image: ${DOCKER_REGISTRY-}yarpapigateway
+    build:
+      context: .
+      dockerfile: APIGateways/YARPAPIGateway/Dockerfile
+

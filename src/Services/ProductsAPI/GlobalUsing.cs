@@ -5,3 +5,4 @@ global using MediatR;
 global using Marten;
 global using ProductsAPI.Models;
 global using ProductsAPI.Exceptions;
+global using ProductsAPI.ProductsInitialData;
