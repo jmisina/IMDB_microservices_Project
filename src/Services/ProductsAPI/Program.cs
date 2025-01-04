@@ -20,7 +20,6 @@ builder.Services.InitializeMartenWith<ProductsInitialData>();
 builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
 
 
-
 var app = builder.Build();
 
 app.MapCarter();
@@ -32,5 +31,6 @@ app.UseHealthChecks("/products/health",
     });
 
 app.MapGet("/products/helloworld", () => "Hello World!");
+
 
 app.Run();

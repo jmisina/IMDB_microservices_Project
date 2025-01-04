@@ -8,7 +8,9 @@ services:
 
 
   products_pgdb:
+    image: postgres:16.2-alpine
 
+  users_pgdb:
     image: postgres:16.2-alpine
     
 
@@ -17,4 +19,11 @@ services:
     build:
       context: .
       dockerfile: APIGateways/YARPAPIGateway/Dockerfile
+
+
+  usersapi:
+    image: ${DOCKER_REGISTRY-}usersapi
+    build:
+      context: .
+      dockerfile: Services/UsersAPI/Dockerfile
 
