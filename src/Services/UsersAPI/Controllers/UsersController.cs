@@ -78,7 +78,7 @@ namespace UsersAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Users.Add(user);
+            await _context.Database.ExecuteSqlInterpolatedAsync($"");
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
