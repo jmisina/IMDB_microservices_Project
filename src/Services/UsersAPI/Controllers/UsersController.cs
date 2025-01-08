@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UsersAPI.Data;
 using UsersAPI.Models;
+using UsersAPI.DTO;
+using Microsoft.AspNetCore.Identity;
+using UsersAPI.Security;
 
 namespace UsersAPI.Controllers
 {
@@ -43,7 +46,6 @@ namespace UsersAPI.Controllers
         }
 
         // PUT: /users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
@@ -76,12 +78,14 @@ namespace UsersAPI.Controllers
         // POST: /users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(CreateUserRequest userData)
         {
-            await _context.Database.ExecuteSqlInterpolatedAsync($"");
+            var passwordHasher = new PasswordHasher();
+            var passwordHash = passwordHasher.Hash(userData.PasswordRaw);
+            await _context.Database.ExecuteSqlInterpolatedAsync($"CALL createuser({userData.Username},{passwordHash},{userData.Email})");
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", userData);
         }
 
         // DELETE: /users/5

@@ -1,4 +1,17 @@
 services:
+  dev-console:
+    image: ubuntu:latest  
+    command: sh  
+    stdin_open: true  
+    tty: true  
+    volumes:
+     - /dev-console-data
+
+  yarpapigateway:
+    image: ${DOCKER_REGISTRY-}yarpapigateway
+    build:
+      context: .
+      dockerfile: APIGateways/YARPAPIGateway/Dockerfile
 
   productsapi:
     image: ${DOCKER_REGISTRY-}productsapi
@@ -12,13 +25,9 @@ services:
 
   users_pgdb:
     image: postgres:16.2-alpine
-    
 
-  yarpapigateway:
-    image: ${DOCKER_REGISTRY-}yarpapigateway
-    build:
-      context: .
-      dockerfile: APIGateways/YARPAPIGateway/Dockerfile
+  orders_pgdb:
+    image: postgres:16.2-alpine
 
 
   usersapi:
@@ -26,4 +35,11 @@ services:
     build:
       context: .
       dockerfile: Services/UsersAPI/Dockerfile
+
+
+  ordersapi:
+    image: ${DOCKER_REGISTRY-}ordersapi
+    build:
+      context: .
+      dockerfile: Services/OrdersAPI/Dockerfile
 

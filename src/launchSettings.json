@@ -6,7 +6,8 @@
       "serviceActions": {
         "productsapi": "StartDebugging",
         "yarpapigateway": "StartDebugging",
-        "usersapi": "StartDebugging"
+        "usersapi": "StartDebugging",
+        "ordersapi": "StartDebugging"
       }
     }
   }

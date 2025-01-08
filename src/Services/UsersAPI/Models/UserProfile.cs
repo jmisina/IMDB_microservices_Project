@@ -17,17 +17,6 @@ namespace UsersAPI.Models
         [StringLength(20)]
         public string Phone { get; set; }
 
-        [StringLength(255)]
-        public string Address { get; set; }
-
-        [StringLength(50)]
-        public string City { get; set; }
-
-        [StringLength(20)]
-        public string PostalCode { get; set; }
-
-        [StringLength(50)]
-        public string Country { get; set; }
 
         // Navigation property
         public User User { get; set; }

@@ -36,7 +36,6 @@ namespace UsersAPI.Controllers
         }
 
         // PUT: /adresses/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAddress(int id, Address address)
         {
