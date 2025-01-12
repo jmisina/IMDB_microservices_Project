@@ -32,11 +32,11 @@ namespace UsersAPI.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    AddressType = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    AddressLine = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    City = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    PostalCode = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Country = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    AddressType = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    AddressLine = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    City = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    PostalCode = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    Country = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,7 +76,7 @@ namespace UsersAPI.Migrations
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
+                    Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {

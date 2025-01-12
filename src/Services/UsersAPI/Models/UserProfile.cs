@@ -15,7 +15,7 @@ namespace UsersAPI.Models
         public string LastName { get; set; }
 
         [StringLength(20)]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
 
         // Navigation property

@@ -1,5 +1,4 @@
 ﻿
-using ProductsAPI.Products.GetProducts;
 
 namespace ProductsAPI.Products.UpdateProduct
 {
@@ -24,7 +23,8 @@ namespace ProductsAPI.Products.UpdateProduct
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithSummary("Update Product")
-            .WithDescription("Update Product");
+            .WithDescription("Update Product")
+            .RequireAuthorization();
         }
     }
 }

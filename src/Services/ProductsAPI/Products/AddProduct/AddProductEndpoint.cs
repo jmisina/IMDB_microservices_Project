@@ -23,7 +23,8 @@ namespace ProductsAPI.Products.AddProduct
             .Produces<AddProductResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Add Product")
-            .WithDescription("Add Product");
+            .WithDescription("Add Product")
+            .RequireAuthorization();
         }
 
     }

@@ -21,7 +21,8 @@ namespace ProductsAPI.Products.DeleteProduct
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithSummary("Delete Product")
-            .WithDescription("Delete Product");
+            .WithDescription("Delete Product")
+            .RequireAuthorization();
         }
     }
 }

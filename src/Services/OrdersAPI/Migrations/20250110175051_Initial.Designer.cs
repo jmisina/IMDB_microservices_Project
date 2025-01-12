@@ -12,7 +12,7 @@ using OrdersAPI.Data;
 namespace OrdersAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250108084127_Initial")]
+    [Migration("20250110175051_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -51,21 +51,22 @@ namespace OrdersAPI.Migrations
 
             modelBuilder.Entity("OrdersAPI.Models.OrderItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProductId")
+                    b.Property<Guid>("ProductId")
                         .HasMaxLength(50)
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
@@ -76,11 +77,9 @@ namespace OrdersAPI.Migrations
 
             modelBuilder.Entity("OrdersAPI.Models.Payment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");

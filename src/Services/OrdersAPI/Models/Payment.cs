@@ -6,16 +6,14 @@ namespace OrdersAPI.Models
     public class Payment
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         [ForeignKey("Order")]
-
-        public int OrderId { get; set; } // Foreign key to Order
-        public DateTime PaymentDate { get; set; }
+        public int OrderId { get; set; } 
+        public DateTime? PaymentDate { get; set; }
         public decimal Amount { get; set; }
-        public string Status { get; set; } // e.g., "completed", "pending"
+        public string Status { get; set; } 
 
-        // Navigation property
         public Order Order { get; set; }
     }
 }

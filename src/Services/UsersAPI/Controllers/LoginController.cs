@@ -14,22 +14,26 @@ namespace UsersAPI.Controllers
     {
 
         private readonly DataContext _context;
+        private readonly TokenProvider _tokenProvider;
 
-        public LoginController(DataContext context)
+        public LoginController(DataContext context, TokenProvider tokenProvider)
         {
             _context = context;
+            _tokenProvider = tokenProvider;
         }
 
         [HttpPost]
-        public async Task<UserAuthorisation> Login(UserLoginRequest request)
+        public async Task<string> Login(UserLoginRequest request)
         {
-            var passwordHasher = new PasswordHasher();
             UserAuthorisation? user = await _context.UserAuthorisations.SingleOrDefaultAsync(u => u.Email == request.Email);
+            
 
             if (user == null)
             {
                 throw new Exception("User not found in database!");
             }
+
+            var passwordHasher = new PasswordHasher();
 
             bool verified = passwordHasher.Verify(request.Password, user.PasswordHash);
 
@@ -38,7 +42,11 @@ namespace UsersAPI.Controllers
                 throw new Exception("Incorrect password");
             }
 
-            return user;
+            User? userIdentity = await _context.Users.SingleOrDefaultAsync(u => u.Id == user.UserId);
+            string token = _tokenProvider.Create(userIdentity);
+
+
+            return token;
 
 
         }

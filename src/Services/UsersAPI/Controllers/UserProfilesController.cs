@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using UsersAPI.Data;
+using UsersAPI.DTO;
 using UsersAPI.Models;
 
 namespace UsersAPI.Controllers
 {
-    [Route("userprofiles")]
+    [Route("profiles")]
     [ApiController]
     public class UserProfilesController : ControllerBase
     {
@@ -43,80 +38,37 @@ namespace UsersAPI.Controllers
         }
 
         // PUT: userprofiles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserProfile(int id, UserProfile userProfile)
+        public async Task<IActionResult> PutUserProfile(int id, ModifyUserProfileCommand command)
         {
-            if (id != userProfile.UserId)
-            {
-                return BadRequest();
-            }
+            var currentDateTime = DateTime.UtcNow;
+            var user = await _context.Users.FindAsync(id);
 
-            _context.Entry(userProfile).State = EntityState.Modified;
+            if (user != null)
+            {
+                var userProfile = await _context.UserProfiles
+                    .FirstOrDefaultAsync(a => a.UserId == id);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserProfileExists(id))
+                if (userProfile != null)
                 {
-                    return NotFound();
+                    userProfile.FirstName = command.FirstName;
+                    userProfile.LastName = command.LastName;
+                    userProfile.Phone = command.Phone;
+                    user.UpdatedAt = currentDateTime;
+
+                    await _context.SaveChangesAsync();
+
+                    return Ok();
                 }
                 else
                 {
-                    throw;
+                    return NotFound(new { Message = "Profile not found." });
                 }
             }
-
-            return NoContent();
-        }
-
-        // POST: userprofiles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<UserProfile>> PostUserProfile(UserProfile userProfile)
-        {
-            _context.UserProfiles.Add(userProfile);
-            try
+            else
             {
-                await _context.SaveChangesAsync();
+                return NotFound(new { Message = "User not found." });
             }
-            catch (DbUpdateException)
-            {
-                if (UserProfileExists(userProfile.UserId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetUserProfile", new { id = userProfile.UserId }, userProfile);
-        }
-
-        // DELETE: userprofiles/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserProfile(int id)
-        {
-            var userProfile = await _context.UserProfiles.FindAsync(id);
-            if (userProfile == null)
-            {
-                return NotFound();
-            }
-
-            _context.UserProfiles.Remove(userProfile);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UserProfileExists(int id)
-        {
-            return _context.UserProfiles.Any(e => e.UserId == id);
         }
     }
 }

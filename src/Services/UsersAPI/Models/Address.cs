@@ -9,20 +9,20 @@ namespace UsersAPI.Models
         [Key, ForeignKey("User")]
         public int UserId { get; set; }
 
-        [Required, StringLength(20)]
-        public string AddressType { get; set; }
+        [StringLength(20)]
+        public string? AddressType { get; set; }
 
-        [Required, StringLength(255)]
-        public string AddressLine { get; set; }
+        [StringLength(255)]
+        public string? AddressLine { get; set; }
 
-        [Required, StringLength(50)]
-        public string City { get; set; }
+        [StringLength(50)]
+        public string? City { get; set; }
 
-        [Required, StringLength(20)]
-        public string PostalCode { get; set; }
+        [StringLength(20)]
+        public string? PostalCode { get; set; }
 
-        [Required, StringLength(50)]
-        public string Country { get; set; }
+        [StringLength(50)]
+        public string? Country { get; set; }
 
         // Navigation property
         public User User { get; set; }

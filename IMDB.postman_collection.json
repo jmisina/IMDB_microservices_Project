@@ -1,0 +1,807 @@
+{
+	"info": {
+		"_postman_id": "50443c26-f6b4-4530-bd41-97a24a9072f2",
+		"name": "IMDB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33991633"
+	},
+	"item": [
+		{
+			"name": "OrdersAPI",
+			"item": [
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/orders-service/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"orders-service",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 1,\r\n  \"orderItems\": [\r\n    {\r\n      \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n      \"quantity\": 1,\r\n      \"unitPrice\": 100.34\r\n    },\r\n    {\r\n      \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afb5\",\r\n      \"quantity\": 20,\r\n      \"unitPrice\": 11.99\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7777/orders-service/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"orders-service",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/orders-service/orders/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"orders-service",
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/orders-service/orders/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"orders-service",
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order Status to \"PENDING\"",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/orders-service/orders/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"orders-service",
+								"orders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order Status to \"COMPLETED\"",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/orders-service/orders/:id/close",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"orders-service",
+								"orders",
+								":id",
+								"close"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order By User Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/orders-service/orders/user/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"orders-service",
+								"orders",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ProductsAPI",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/catalog-service/products",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"catalog-service",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/catalog-service/products/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"catalog-service",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/catalog-service/products/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"catalog-service",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "93170c85-7795-489c-8e8f-7dcf3b4f4188"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/catalog-service/products/category/:category",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"catalog-service",
+								"products",
+								"category",
+								":category"
+							],
+							"variable": [
+								{
+									"key": "category",
+									"value": "Narzędzia"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiYXVkIjoiYWNjb3VudCIsImlzcyI6InVzZXJzYXBpIiwiZXhwIjoxNzM2ODQ4ODk1LCJpYXQiOjE3MzY2MzI4OTUsIm5iZiI6MTczNjYzMjg5NX0.Sr5CdT3hSj90ix6ZZsO5cR8pXjjN793gVNUHya9QIs1arPhHxuVAT5ELIvhVnlAxIkAvQ5q4L-vHJUH9ZF8RQg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Nowy produkt\",\r\n  \"description\": \"Produkt testowy\",\r\n  \"price\": 10.99,\r\n  \"weight\": 12,\r\n  \"stock\": 999,\r\n  \"category\": [\r\n    \"Narzędzia\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7777/catalog-service/products",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"catalog-service",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Product Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiYXVkIjoiYWNjb3VudCIsImlzcyI6InVzZXJzYXBpIiwiZXhwIjoxNzM2ODQ4ODk1LCJpYXQiOjE3MzY2MzI4OTUsIm5iZiI6MTczNjYzMjg5NX0.Sr5CdT3hSj90ix6ZZsO5cR8pXjjN793gVNUHya9QIs1arPhHxuVAT5ELIvhVnlAxIkAvQ5q4L-vHJUH9ZF8RQg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"name\": \"Test zmiany produktu\",\r\n  \"description\": \"Ten produkt został zmieniony\",\r\n  \"price\": 123,\r\n  \"weight\": 321,\r\n  \"stock\": 9999,\r\n  \"category\": [\r\n    \"KategoriaA\",\r\n    \"KategoriaB\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7777/catalog-service/products",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"catalog-service",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products Paginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/catalog-service/products?pageSize=2&pageNumber=2",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"catalog-service",
+								"products"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "2"
+								},
+								{
+									"key": "pageNumber",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Healthcheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7777/catalog-service/products/health",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"catalog-service",
+								"products",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UsersAPI",
+			"item": [
+				{
+					"name": "Address Controller Endpoints",
+					"item": [
+						{
+							"name": "Get All Addresses",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:7777/user-service/addresses",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"addresses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Address By Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "localhost:7777/user-service/addresses/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"addresses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Address",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "localhost:7777/user-service/addresses/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"addresses",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users Controller Endpoints",
+					"item": [
+						{
+							"name": "Register New User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"Testowy\",\r\n  \"passwordRaw\": \"haslo123\",\r\n  \"email\": \"test@test.com\",\r\n  \"firstName\": \"Jan\",\r\n  \"lastName\": \"Kowalski\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:7777/user-service/users",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:7777/user-service/users",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "localhost:7777/user-service/users/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"test@test.com\",\r\n  \"oldPassword\": \"haslo123\",\r\n  \"newPassword\": \"haslo321\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:7777/user-service/users/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiYXVkIjoiYWNjb3VudCIsImlzcyI6InVzZXJzYXBpIiwiZXhwIjoxNzM2OTE4MTIxLCJpYXQiOjE3MzY3MDIxMjEsIm5iZiI6MTczNjcwMjEyMX0.j_sxDGDAtVYGkDxzkjvNx4_TCGLfWs4cDcAj3qRFOYEbZQetDVwZh53NlEXAfksLUQWnwpo6tYnkhE0Qd5Hjpw",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:7777/user-service/users/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UserProfiles Controller Endpoints",
+					"item": [
+						{
+							"name": "Get All Profiles",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:7777/user-service/profiles",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"profiles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Profiles By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:7777/user-service/profiles",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"profiles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Profile",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"firstName\": \"NoweImie\",\r\n  \"lastName\": \"NoweNazwisko\",\r\n  \"phone\": \"123-456-789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:7777/user-service/profiles/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "7777",
+									"path": [
+										"user-service",
+										"profiles",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Log In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"haslo123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:7777/user-service/users/",
+							"host": [
+								"localhost"
+							],
+							"port": "7777",
+							"path": [
+								"user-service",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiYXVkIjoiYWNjb3VudCIsImlzcyI6InVzZXJzYXBpIiwiZXhwIjoxNzM2OTIwNjE3LCJpYXQiOjE3MzY3MDQ2MTcsIm5iZiI6MTczNjcwNDYxN30.zgje1H_7g3P-sHexm2m6UX1IMi1ITCPw58vhYp_5-jxTkq3HFX2Yg6GhVcNa4Pis9dhu5mELypFplIshMqv8Pw",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
