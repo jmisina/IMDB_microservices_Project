@@ -20,13 +20,7 @@ services:
       dockerfile: Services/ProductsAPI/Dockerfile
 
 
-  products_pgdb:
-    image: postgres:16.2-alpine
-
-  users_pgdb:
-    image: postgres:16.2-alpine
-
-  orders_pgdb:
+  postgres_db:
     image: postgres:16.2-alpine
 
 

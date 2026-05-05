@@ -15,50 +15,23 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
-  products_pgdb:
-    container_name: products_pgdb
+  postgres_db:
+    container_name: postgres_db
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB:  productsdb
-      PGPASSWORD: postgres
-      PGUSER: postgres
-      PGDATABASE: productsdb
+      POSTGRES_INITDB_ARGS: "-c listen_addresses='*'"
     ports:
-      - "5433:5433"
+      - "5432:5432"
     volumes:
-      - ./docker/products/postgresql:/data
-    command: -p 5433
-
-  users_pgdb:
-    container_name: users_pgdb
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB:  usersdb
-      PGPASSWORD: postgres
-      PGUSER: postgres
-      PGDATABASE: usersdb
-    ports:
-      - "5434:5434"
-    volumes:
-      - ./docker/users/postgresql:/data
-    command: -p 5434
-
-  orders_pgdb:
-    container_name: orders_pgdb
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB:  ordersdb
-      PGPASSWORD: postgres
-      PGUSER: postgres
-      PGDATABASE: ordersdb
-    ports:
-      - "5435:5435"
-    volumes:
-      - ./docker/users/postgresql:/data
-    command: -p 5435
+      - ./docker/postgresql:/data
+      - ./docker/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 
 
@@ -68,9 +41,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=products_pgdb;Port=5433;Database=productsdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=productsdb;User Id=postgres;Password=postgres;Include Error Detail=true
     depends_on:
-     - products_pgdb
+      postgres_db:
+        condition: service_healthy
     ports:
       - "6000:8080"
       - "6001:8081"
@@ -82,12 +56,13 @@ services:
   usersapi:
     hostname: usersapi
     depends_on:
-      - users_pgdb
+      postgres_db:
+        condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8180
       - ASPNETCORE_HTTPS_PORTS=8181
-      - ConnectionStrings__Database=Server=users_pgdb;Port=5434;Database=usersdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=usersdb;User Id=postgres;Password=postgres;Include Error Detail=true
     ports:
       - "6010:8180"
       - "6011:8181"
@@ -98,11 +73,14 @@ services:
 
   ordersapi:
     hostname: ordersapi
+    depends_on:
+      postgres_db:
+        condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8280
       - ASPNETCORE_HTTPS_PORTS=8281
-      - ConnectionStrings__Database=Server=orders_pgdb;Port=5435;Database=ordersdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=ordersdb;User Id=postgres;Password=postgres;Include Error Detail=true
     ports:
       - "6020:8280"
       - "6021:8281"
