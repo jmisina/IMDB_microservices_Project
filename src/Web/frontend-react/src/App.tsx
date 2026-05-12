@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Login } from './features/auth/Login';
 import { ProductList } from './features/catalog/ProductList';
+import { AdminProducts } from './features/admin/AdminProducts';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<ProductList />} />
           <Route path="cart" element={<div>Shopping Cart (Coming Soon)</div>} />
-          <Route path="admin" element={<div>Admin Dashboard (Coming Soon)</div>} />
+          <Route path="admin" element={<AdminProducts />} />
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>
