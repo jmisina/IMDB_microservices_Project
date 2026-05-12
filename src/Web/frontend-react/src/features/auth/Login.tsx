@@ -12,9 +12,12 @@ export const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = await login({ email, password });
-      // Using 'as any' for now as requested for a simple user object
-      setAuth(token, { email } as any);
+      // Destructure token and user from the updated authApi login function
+      const { token, user } = await login({ email, password });
+      
+      // Correctly pass the fully-typed User object to the store
+      setAuth(token, user);
+      
       navigate('/');
     } catch (error) {
       console.error('Login failed', error);
