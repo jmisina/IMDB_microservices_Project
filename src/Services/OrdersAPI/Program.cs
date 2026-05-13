@@ -22,6 +22,11 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Database"));
 });
 
+builder.Services.AddHttpClient("ProductsAPI", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ProductsApiSettings:BaseAddress"] ?? "http://productsapi:8080");
+});
+
 
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>

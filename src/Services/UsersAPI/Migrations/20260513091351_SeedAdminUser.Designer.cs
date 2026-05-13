@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UsersAPI.Data;
@@ -11,9 +12,11 @@ using UsersAPI.Data;
 namespace UsersAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260513091351_SeedAdminUser")]
+    partial class SeedAdminUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,7 +122,7 @@ namespace UsersAPI.Migrations
                         {
                             UserId = 1,
                             Email = "admin@imdb.com",
-                            PasswordHash = "0409A6767571E8669947844002660700CD9E47A9A060C3817169A1A4E90B0929-37A092A2877665E00C6752044813A2AA",
+                            PasswordHash = "0000000000000000000000000000000000000000000000000000000000000000-00000000000000000000000000000000",
                             Role = "ADMIN"
                         });
                 });

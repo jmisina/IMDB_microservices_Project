@@ -121,14 +121,26 @@ namespace UsersAPI.Controllers
         // POST: /users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<CreateUserResult> PostUser(CreateUserRequest userData)
+        public async Task<ActionResult<CreateUserResult>> PostUser(CreateUserRequest userData)
         {
+            var emailExists = await _context.UserAuthorisations.AnyAsync(ua => ua.Email == userData.Email);
+            if (emailExists)
+            {
+                return BadRequest(new { Message = "Email address already in use." });
+            }
+
+            var usernameExists = await _context.Users.AnyAsync(u => u.Username == userData.Username);
+            if (usernameExists)
+            {
+                return BadRequest(new { Message = "Username already in use." });
+            }
+
             var passwordHasher = new PasswordHasher();
             var passwordHash = passwordHasher.Hash(userData.PasswordRaw);
             await _context.Database.ExecuteSqlInterpolatedAsync($"CALL createuser({userData.Username},{passwordHash},{userData.Email},{userData.FirstName},{userData.LastName})");
             await _context.SaveChangesAsync();
 
-            return new CreateUserResult() {Result = "success" };
+            return new CreateUserResult() { Result = "success" };
         }
 
         // DELETE: /users/5

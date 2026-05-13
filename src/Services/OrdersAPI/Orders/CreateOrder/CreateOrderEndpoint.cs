@@ -6,7 +6,7 @@ namespace OrdersAPI.Orders.CreateOrder
 {
     public record CreateOrderRequest(int UserId, List<NewOrderItemCommand> OrderItems);
     
-    public record CreateOrderResponse(int Id);
+    public record CreateOrderResponse(int Id, decimal TotalPrice);
     public class CreateOrderEndpoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
