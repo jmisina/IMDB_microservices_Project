@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "./catalogApi";
+import { useCartStore } from "../../store/useCartStore";
 
 export const ProductList = () => {
+  const addItem = useCartStore((state) => state.addItem);
   const {
     data: products,
     isLoading,
@@ -28,7 +30,10 @@ export const ProductList = () => {
           <p className="text-gray-600 text-sm">{product.description}</p>
           <div className="mt-4 flex items-center justify-between">
             <span className="text-xl font-bold">{product.price}zł</span>
-            <button className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700">
+            <button
+              onClick={() => addItem({ id: product.id, name: product.name, price: product.price })}
+              className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700 active:scale-95 transition-all"
+            >
               Add to Cart
             </button>
           </div>

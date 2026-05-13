@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
-import { ShoppingCart, User, Settings } from 'lucide-react';
+import { User, Settings } from 'lucide-react';
+import { CartBadge } from './CartBadge';
 
 export const Layout = () => {
   const { token, logout } = useAuthStore();
@@ -11,7 +12,7 @@ export const Layout = () => {
         <div className="mx-auto flex max-w-7xl items-center justify-between p-4">
           <Link to="/" className="text-xl font-bold text-blue-600">IMDB Shop</Link>
           <div className="flex items-center space-x-6">
-            <Link to="/cart" className="flex items-center space-x-1"><ShoppingCart size={20} /><span>Cart</span></Link>
+            <CartBadge />
             {token ? (
               <>
                 <Link to="/admin" className="flex items-center space-x-1"><Settings size={20} /><span>Admin</span></Link>
