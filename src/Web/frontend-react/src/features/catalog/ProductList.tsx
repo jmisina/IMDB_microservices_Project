@@ -17,22 +17,21 @@ export const ProductList = () => {
   if (error) return <div className="text-red-500">Error loading products</div>;
 
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="flex flex-col gap-4">
       {products.map((product: { id: string; name: string; description: string; price: number }) => (
         <div
           key={product.id}
-          className="rounded-lg bg-white p-4 shadow text-black"
+          className="rounded-lg bg-white p-4 shadow text-black flex items-center justify-between"
         >
-          <div className="mb-4 h-48 w-full bg-gray-200 rounded flex items-center justify-center text-gray-400">
-            No Image
+          <div className="flex-grow">
+            <h3 className="text-lg font-bold">{product.name}</h3>
+            <p className="text-gray-600 text-sm">{product.description}</p>
           </div>
-          <h3 className="text-lg font-bold">{product.name}</h3>
-          <p className="text-gray-600 text-sm">{product.description}</p>
-          <div className="mt-4 flex items-center justify-between">
-            <span className="text-xl font-bold">{product.price}zł</span>
+          <div className="flex items-center gap-6 ml-4">
+            <span className="text-xl font-bold whitespace-nowrap">{product.price}zł</span>
             <button
               onClick={() => addItem({ id: product.id, name: product.name, price: product.price })}
-              className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700 active:scale-95 transition-all"
+              className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 active:scale-95 transition-all"
             >
               Add to Cart
             </button>
