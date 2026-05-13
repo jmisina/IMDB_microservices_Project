@@ -1,14 +1,18 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getProducts } from '../catalog/catalogApi';
-import apiClient from '../../api/apiClient';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getProducts } from "../catalog/catalogApi";
+import apiClient from "../../api/apiClient";
 
 export const AdminProducts = () => {
   const queryClient = useQueryClient();
-  const { data: products, isLoading } = useQuery({ queryKey: ['products'], queryFn: getProducts });
+  const { data: products, isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProducts,
+  });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => apiClient.delete(`/catalog-service/products/${id}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['products'] }),
+    mutationFn: (id: string) =>
+      apiClient.delete(`/catalog-service/products/${id}`),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["products"] }),
   });
 
   if (isLoading) return <div className="text-black">Loading...</div>;
@@ -34,19 +38,21 @@ export const AdminProducts = () => {
             {products?.map((p: any) => (
               <tr key={p.id} className="border-b hover:bg-gray-50">
                 <td className="py-2">{p.name}</td>
-                <td>${p.price}</td>
+                <td>{p.price}zł</td>
                 <td className="space-x-4">
-                  <button className="text-blue-600 hover:underline">Edit</button>
-                  <button 
+                  <button className="text-blue-600 hover:underline">
+                    Edit
+                  </button>
+                  <button
                     onClick={() => {
-                      if (confirm('Are you sure?')) {
+                      if (confirm("Are you sure?")) {
                         deleteMutation.mutate(p.id);
                       }
                     }}
                     className="text-red-600 hover:underline"
                     disabled={deleteMutation.isPending}
                   >
-                    {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
+                    {deleteMutation.isPending ? "Deleting..." : "Delete"}
                   </button>
                 </td>
               </tr>
