@@ -39,7 +39,7 @@ export const CartPage = () => {
       navigate('/checkout/success', { 
         state: { orderId: result.id, totalPrice: result.totalPrice } 
       });
-    } catch (err: any) {
+    } catch {
       setError("Checkout failed. Please try again later.");
     } finally {
       setIsSubmitting(false);
