@@ -1,11 +1,50 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../../store/useCartStore';
+import { useAuthStore } from '../../store/useAuthStore';
+import { createOrder } from '../../api/ordersApi';
 import { CartItemComponent } from './CartItemComponent';
 
 export const CartPage = () => {
   const { items, getTotalPrice, clearCart } = useCartStore();
   const total = getTotalPrice();
+  
+  const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCheckout = async () => {
+    if (!user) {
+      setError("Please login to proceed with checkout.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const orderItems = items.map(item => ({
+        productId: item.id,
+        quantity: item.quantity
+      }));
+
+      const result = await createOrder({
+        userId: user.id,
+        orderItems
+      });
+
+      clearCart();
+      navigate('/checkout/success', { 
+        state: { orderId: result.id, totalPrice: result.totalPrice } 
+      });
+    } catch (err: any) {
+      setError("Checkout failed. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (items.length === 0) {
     return (
@@ -54,8 +93,13 @@ export const CartPage = () => {
             <div className="text-lg text-gray-600">
               Total: <span className="text-2xl font-bold text-gray-900 ml-2">{total.toFixed(2)}zł</span>
             </div>
-            <button className="px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors shadow-sm">
-              Checkout
+            {error && <p className="text-red-500 text-sm mr-4 font-normal">{error}</p>}
+            <button 
+              onClick={handleCheckout}
+              disabled={isSubmitting}
+              className="px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors shadow-sm disabled:bg-gray-400"
+            >
+              {isSubmitting ? 'Processing...' : 'Checkout'}
             </button>
           </div>
         </div>
