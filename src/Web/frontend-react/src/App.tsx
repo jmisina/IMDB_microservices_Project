@@ -4,6 +4,7 @@ import { Login } from './features/auth/Login';
 import { ProductList } from './features/catalog/ProductList';
 import { AdminProducts } from './features/admin/AdminProducts';
 import { CartPage } from './features/cart/CartPage';
+import { CheckoutSuccess } from './features/cart/CheckoutSuccess';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<ProductList />} />
           <Route path="cart" element={<CartPage />} />
+          <Route path="checkout/success" element={<CheckoutSuccess />} />
           <Route path="admin" element={<AdminProducts />} />
         </Route>
         <Route path="/login" element={<Login />} />
