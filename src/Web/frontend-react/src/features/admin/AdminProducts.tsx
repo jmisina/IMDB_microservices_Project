@@ -35,7 +35,7 @@ export const AdminProducts = () => {
             </tr>
           </thead>
           <tbody>
-            {products?.map((p: any) => (
+            {products?.map((p: { id: string; name: string; price: number }) => (
               <tr key={p.id} className="border-b hover:bg-gray-50">
                 <td className="py-2">{p.name}</td>
                 <td>{p.price}zł</td>
