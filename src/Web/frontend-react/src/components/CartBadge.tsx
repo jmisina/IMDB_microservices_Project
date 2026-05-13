@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { useCartStore } from '../store/useCartStore';
 
 export const CartBadge = () => {
-  const getItemCount = useCartStore((state) => state.getItemCount);
-  const count = getItemCount();
+  const count = useCartStore((state) => 
+    state.items.reduce((total, item) => total + item.quantity, 0)
+  );
 
   return (
     <Link to="/cart" className="relative p-2 text-gray-600 hover:text-blue-600 transition-colors">
