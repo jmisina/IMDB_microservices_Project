@@ -1,12 +1,4 @@
 services:
-  dev-console:
-    image: ubuntu:latest  
-    command: sh  
-    stdin_open: true  
-    tty: true  
-    volumes:
-     - /dev-console-data
-
   yarpapigateway:
     image: ${DOCKER_REGISTRY-}yarpapigateway
     build:

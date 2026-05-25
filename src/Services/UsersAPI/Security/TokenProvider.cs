@@ -10,7 +10,11 @@ namespace UsersAPI.Security
     {
         public string Create(User user)
         {
-            string secretKey = configuration["Jwt:Secret"];
+            string? secretKey = configuration["Jwt:Secret"];
+            if (string.IsNullOrEmpty(secretKey))
+            {
+                throw new InvalidOperationException("JWT Secret Key is not configured.");
+            }
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);

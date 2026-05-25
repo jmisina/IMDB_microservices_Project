@@ -7,13 +7,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
     ports:
       - "7777:8080"
-      - "7788:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
   postgres_db:
     container_name: postgres_db
@@ -37,53 +32,44 @@ services:
 
   productsapi:
     hostname: productsapi
+    env_file:
+      - ./Services/UsersAPI/.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=productsdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=productsdb;User Id=postgres;Password=${DB_PASSWORD:-postgres};Include Error Detail=true
     depends_on:
       postgres_db:
         condition: service_healthy
     ports:
       - "6000:8080"
-      - "6001:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
 
   usersapi:
     hostname: usersapi
+    env_file:
+      - ./Services/UsersAPI/.env
     depends_on:
       postgres_db:
         condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8180
-      - ASPNETCORE_HTTPS_PORTS=8181
-      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=usersdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=usersdb;User Id=postgres;Password=${DB_PASSWORD:-postgres};Include Error Detail=true
     ports:
       - "6010:8180"
-      - "6011:8181"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     
 
   ordersapi:
     hostname: ordersapi
+    env_file:
+      - ./Services/UsersAPI/.env
     depends_on:
       postgres_db:
         condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8280
-      - ASPNETCORE_HTTPS_PORTS=8281
-      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=ordersdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=ordersdb;User Id=postgres;Password=${DB_PASSWORD:-postgres};Include Error Detail=true
     ports:
       - "6020:8280"
-      - "6021:8281"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
