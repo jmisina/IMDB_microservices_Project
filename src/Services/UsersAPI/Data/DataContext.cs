@@ -36,7 +36,6 @@ namespace UsersAPI.Data
             {
                 UserId = adminId,
                 Email = "admin@imdb.com",
-                // Password: Admin!2026
                 PasswordHash = "DB05358E2A1DFB67BD4070BC6452869DE69A92B55BB2CFE05CFC0759D3E86F56-B7DDA628FB99D19ECA90463D1F128A30",
                 Role = "ADMIN"
             });
