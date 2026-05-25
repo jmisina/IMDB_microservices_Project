@@ -32,10 +32,12 @@ services:
 
   productsapi:
     hostname: productsapi
+    env_file:
+      - ./Services/UsersAPI/.env
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=productsdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=productsdb;User Id=postgres;Password=${DB_PASSWORD:-postgres};Include Error Detail=true
     depends_on:
       postgres_db:
         condition: service_healthy
@@ -45,25 +47,29 @@ services:
 
   usersapi:
     hostname: usersapi
+    env_file:
+      - ./Services/UsersAPI/.env
     depends_on:
       postgres_db:
         condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8180
-      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=usersdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=usersdb;User Id=postgres;Password=${DB_PASSWORD:-postgres};Include Error Detail=true
     ports:
       - "6010:8180"
     
 
   ordersapi:
     hostname: ordersapi
+    env_file:
+      - ./Services/UsersAPI/.env
     depends_on:
       postgres_db:
         condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8280
-      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=ordersdb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=postgres_db;Port=5432;Database=ordersdb;User Id=postgres;Password=${DB_PASSWORD:-postgres};Include Error Detail=true
     ports:
       - "6020:8280"

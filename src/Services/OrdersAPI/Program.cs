@@ -8,6 +8,22 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load .env file
+var root = Directory.GetCurrentDirectory();
+var dotenv = Path.Combine(root, ".env");
+if (File.Exists(dotenv))
+{
+    foreach (var line in File.ReadAllLines(dotenv))
+    {
+        var parts = line.Split('=', 2, StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length != 2) continue;
+        Environment.SetEnvironmentVariable(parts[0].Trim(), parts[1].Trim());
+    }
+}
+
+// Re-sync configuration
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
@@ -37,10 +53,16 @@ builder.Services.AddMediatR(config =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(o =>
     {
+        var secret = builder.Configuration["Jwt:Secret"];
+        if (string.IsNullOrEmpty(secret))
+        {
+            throw new InvalidOperationException("JWT Secret is not configured.");
+        }
+
         o.RequireHttpsMetadata = false;
         o.TokenValidationParameters = new TokenValidationParameters
         {
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             ClockSkew = TimeSpan.Zero

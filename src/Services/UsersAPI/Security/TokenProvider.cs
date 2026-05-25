@@ -10,7 +10,11 @@ namespace UsersAPI.Security
     {
         public string Create(User user)
         {
-            string secretKey = Environment.GetEnvironmentVariable("JWT_SECRET") ?? configuration["Jwt:Secret"] ?? "TemporaryDefaultSecretKeyForDevelopmentOnly123!";
+            string? secretKey = configuration["Jwt:Secret"];
+            if (string.IsNullOrEmpty(secretKey))
+            {
+                throw new InvalidOperationException("JWT Secret Key is not configured.");
+            }
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);
@@ -23,8 +27,8 @@ namespace UsersAPI.Security
                     ]),
                 Expires = DateTime.UtcNow.AddHours(60),
                 SigningCredentials = credentials,
-                Issuer = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? configuration["Jwt:Issuer"],
-                Audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? configuration["Jwt:Audience"]
+                Issuer = configuration["Jwt:Issuer"],
+                Audience = configuration["Jwt:Audience"]
             };
 
             var handler = new JsonWebTokenHandler();
