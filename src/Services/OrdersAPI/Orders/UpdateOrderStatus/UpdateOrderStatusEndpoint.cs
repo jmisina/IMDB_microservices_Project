@@ -25,7 +25,7 @@ namespace OrdersAPI.Orders.UpdateOrderStatus
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Update Order Status")
             .WithDescription("Update Order Status")
-            .RequireAuthorization();
+            .RequireAuthorization("AdminOrManager");
         }
 
     }

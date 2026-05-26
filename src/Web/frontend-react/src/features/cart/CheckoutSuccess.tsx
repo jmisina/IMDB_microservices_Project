@@ -15,18 +15,18 @@ export const CheckoutSuccess = () => {
       <div className="flex justify-center mb-6 text-green-500">
         <CheckCircle size={80} />
       </div>
-      <h1 className="text-4xl font-extrabold text-gray-900 mb-4">Order Confirmed!</h1>
+      <h1 className="text-4xl font-extrabold text-gray-900 mb-4">Zamówienie potwierdzone!</h1>
       <p className="text-xl text-gray-600 mb-8">
-        Thank you for your purchase. Your order has been placed successfully.
+        Dziękujemy za zakupy. Twoje zamówienie zostało złożone pomyślnie.
       </p>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-10 max-w-md mx-auto">
         <div className="flex justify-between mb-4 pb-4 border-b">
-          <span className="text-gray-600">Order ID:</span>
+          <span className="text-gray-600">ID zamówienia:</span>
           <span className="font-bold text-gray-900">#{orderData.orderId}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-gray-600">Total Amount:</span>
+          <span className="text-gray-600">Suma całkowita:</span>
           <span className="font-bold text-gray-900 text-xl">{orderData.totalPrice.toFixed(2)}zł</span>
         </div>
       </div>
@@ -36,7 +36,7 @@ export const CheckoutSuccess = () => {
         className="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-md"
       >
         <ShoppingBag size={20} />
-        Continue Shopping
+        Kontynuuj zakupy
       </Link>
     </div>
   );

@@ -22,7 +22,7 @@ namespace ProductsAPI.Products.DeleteProduct
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithSummary("Delete Product")
             .WithDescription("Delete Product")
-            .RequireAuthorization();
+            .RequireAuthorization("AdminOrManager");
         }
     }
 }

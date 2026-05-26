@@ -24,7 +24,7 @@ namespace ProductsAPI.Products.UpdateProduct
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithSummary("Update Product")
             .WithDescription("Update Product")
-            .RequireAuthorization();
+            .RequireAuthorization("AdminOrManager");
         }
     }
 }

@@ -3,7 +3,7 @@ using ProductsAPI.Products.AddProduct;
 
 namespace ProductsAPI.Products.GetProducts
 {
-    public record GetProductsRequest(int? PageNumber = 1, int? PageSize = 10);
+    public record GetProductsRequest(int? PageNumber = 1, int? PageSize = 10, string? SearchTerm = null);
     public record GetProductsResponse(IEnumerable<Product> Products);
 
     public class GetProductsEndpoint : ICarterModule

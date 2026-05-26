@@ -25,14 +25,10 @@ namespace OrdersAPI.Orders.UpdateOrderStatus
             {
                 throw new Exception("This order is already completed!");
             }
-            else if (order.Status == "PENDING" & payment.Status == "COMPLETED")
-            {
-                throw new Exception("This order is already paid for!");
-            }
 
             payment.PaymentDate = DateTime.UtcNow;
             payment.Status = "COMPLETED";
-            order.Status = "PENDING";
+            order.Status = "COMPLETED";
 
             await context.SaveChangesAsync(cancellationToken);
 

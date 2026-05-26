@@ -24,7 +24,7 @@ namespace ProductsAPI.Products.AddProduct
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Add Product")
             .WithDescription("Add Product")
-            .RequireAuthorization();
+            .RequireAuthorization("AdminOrManager");
         }
 
     }

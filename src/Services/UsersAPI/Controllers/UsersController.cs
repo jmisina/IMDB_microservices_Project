@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using UsersAPI.Data;
 using UsersAPI.Models;
 using UsersAPI.DTO;
@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace UsersAPI.Controllers
 {
@@ -35,7 +36,8 @@ namespace UsersAPI.Controllers
                                     FirstName = up.FirstName,
                                     LastName = up.LastName,
                                     Phone = up.Phone,
-                                    Email = ua.Email
+                                    Email = ua.Email,
+                                    Role = ua.Role
                                 })
                             .ToListAsync(); ;
 
@@ -63,7 +65,8 @@ namespace UsersAPI.Controllers
                 FirstName = userProfile.FirstName,
                 LastName = userProfile.LastName,
                 Phone = userProfile.Phone,
-                Email = userAuth.Email
+                Email = userAuth.Email,
+                Role = userAuth.Role
             };
 
 
@@ -71,7 +74,7 @@ namespace UsersAPI.Controllers
         }
 
         // PUT: /users/5
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, ChangePasswordCommand command)
         {
@@ -144,7 +147,7 @@ namespace UsersAPI.Controllers
         }
 
         // DELETE: /users/5
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -152,6 +155,31 @@ namespace UsersAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        // PATCH: /users/5/role
+        [Authorize(Roles = "ADMIN")]
+        [HttpPatch("{id}/role")]
+        public async Task<IActionResult> PatchUserRole(int id, UpdateUserRoleCommand command)
+        {
+            var userAuth = await _context.UserAuthorisations.FirstOrDefaultAsync(ua => ua.UserId == id);
+
+            if (userAuth == null)
+            {
+                return NotFound(new { Message = "User authorisation not found." });
+            }
+
+            userAuth.Role = command.Role.ToUpper(); // Ensure roles are stored in uppercase
+
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
+            {
+                user.UpdatedAt = DateTime.UtcNow;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
         private bool UserExists(int id)

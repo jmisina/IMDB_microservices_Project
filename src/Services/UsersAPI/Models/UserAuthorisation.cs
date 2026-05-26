@@ -8,8 +8,8 @@ namespace UsersAPI.Models
         [Key, ForeignKey("User")]
         public int UserId { get; set; }
 
-        [Required, StringLength(255)]
-        public string PasswordHash { get; set; }
+        [StringLength(255)]
+        public string? PasswordHash { get; set; }
 
         [Required, StringLength(255)]
         public string Email { get; set; }

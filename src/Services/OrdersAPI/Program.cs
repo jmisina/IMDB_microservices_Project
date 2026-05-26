@@ -50,6 +50,12 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOrManager", policy => 
+        policy.RequireRole("ADMIN", "MANAGER"));
+});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(o =>
     {

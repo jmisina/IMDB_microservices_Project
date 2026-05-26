@@ -25,7 +25,7 @@ export const CartItemComponent = ({ item }: CartItemProps) => {
           onClick={() => updateQuantity(item.id, item.quantity - 1)}
           className="p-1 rounded bg-gray-100 hover:bg-gray-200 text-gray-600"
           disabled={item.quantity <= 1}
-          aria-label="Decrease quantity"
+          aria-label="Zmniejsz ilość"
         >
           <Minus size={16} />
         </button>
@@ -33,7 +33,7 @@ export const CartItemComponent = ({ item }: CartItemProps) => {
         <button 
           onClick={() => updateQuantity(item.id, item.quantity + 1)}
           className="p-1 rounded bg-gray-100 hover:bg-gray-200 text-gray-600"
-          aria-label="Increase quantity"
+          aria-label="Zwiększ ilość"
         >
           <Plus size={16} />
         </button>
@@ -46,8 +46,8 @@ export const CartItemComponent = ({ item }: CartItemProps) => {
       <button 
         onClick={() => removeItem(item.id)}
         className="p-2 text-red-400 hover:text-red-600 transition-colors"
-        title="Remove item"
-        aria-label="Remove item"
+        title="Usuń produkt"
+        aria-label="Usuń produkt"
       >
         <Trash2 size={20} />
       </button>

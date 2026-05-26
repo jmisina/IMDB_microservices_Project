@@ -17,7 +17,7 @@ export const CartPage = () => {
 
   const handleCheckout = async () => {
     if (!user) {
-      setError("Please login to proceed with checkout.");
+      setError("Zaloguj się, aby złożyć zamówienie.");
       return;
     }
 
@@ -40,7 +40,7 @@ export const CartPage = () => {
         state: { orderId: result.id, totalPrice: result.totalPrice } 
       });
     } catch {
-      setError("Checkout failed. Please try again later.");
+      setError("Błąd zamówienia. Spróbuj ponownie później.");
     } finally {
       setIsSubmitting(false);
     }
@@ -52,54 +52,54 @@ export const CartPage = () => {
         <div className="flex justify-center mb-6 text-gray-300">
           <ShoppingBag size={64} />
         </div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Your cart is empty</h2>
-        <p className="text-gray-600 mb-8">Looks like you haven't added any movies yet.</p>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Twój koszyk jest pusty</h2>
+        <p className="text-gray-600 mb-8">Wygląda na to, że nie dodałeś jeszcze żadnych produktów.</p>
         <Link 
           to="/" 
           className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
         >
           <ArrowLeft size={20} />
-          Back to Shop
+          Powrót do sklepu
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-8">
+    <div className="max-w-4xl mx-auto p-4 md:p-8">
       <div className="flex justify-between items-end mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Shopping Cart</h1>
-        <Link to="/" className="text-blue-600 hover:underline text-sm font-medium">
-          Continue Shopping
+        <h1 className="text-4xl font-black text-slate-900 tracking-tight">Koszyk</h1>
+        <Link to="/" className="text-amber-600 font-bold hover:underline transition-all">
+          Kontynuuj zakupy
         </Link>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="p-6">
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className="p-6 md:p-8 divide-y divide-slate-100">
           {items.map(item => (
             <CartItemComponent key={item.id} item={item} />
           ))}
         </div>
         
-        <div className="bg-gray-50 p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="bg-slate-50 p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <button 
             onClick={clearCart}
-            className="text-gray-500 hover:text-red-600 text-sm font-medium transition-colors"
+            className="text-slate-500 hover:text-red-500 font-bold transition-colors text-sm"
           >
-            Clear Cart
+            Wyczyść koszyk
           </button>
           
-          <div className="flex items-center gap-6">
-            <div className="text-lg text-gray-600">
-              Total: <span className="text-2xl font-bold text-gray-900 ml-2">{total.toFixed(2)}zł</span>
+          <div className="flex flex-col sm:flex-row items-center gap-6 w-full md:w-auto">
+            <div className="text-lg text-slate-600 font-medium">
+              Suma: <span className="text-3xl font-black text-slate-900 ml-2">{total.toFixed(2)} zł</span>
             </div>
-            {error && <p className="text-red-500 text-sm mr-4 font-normal">{error}</p>}
+            {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
             <button 
               onClick={handleCheckout}
               disabled={isSubmitting}
-              className="px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors shadow-sm disabled:bg-gray-400"
+              className="px-8 py-4 bg-amber-500 text-slate-900 font-black rounded-2xl hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20 disabled:bg-slate-400 active:scale-95 w-full sm:w-auto"
             >
-              {isSubmitting ? 'Processing...' : 'Checkout'}
+              {isSubmitting ? 'Przetwarzanie...' : 'Zamów teraz'}
             </button>
           </div>
         </div>
@@ -107,3 +107,4 @@ export const CartPage = () => {
     </div>
   );
 };
+

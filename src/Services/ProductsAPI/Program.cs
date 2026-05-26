@@ -41,7 +41,11 @@ builder.Services.AddMarten(opts =>
 builder.Services.InitializeMartenWith<ProductsInitialData>();
 
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOrManager", policy => 
+        policy.RequireRole("ADMIN", "MANAGER"));
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(o =>

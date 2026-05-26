@@ -8,7 +8,7 @@ namespace UsersAPI.Security
 {
     public sealed class TokenProvider(IConfiguration configuration)
     {
-        public string Create(User user)
+        public string Create(User user, string role)
         {
             string? secretKey = configuration["Jwt:Secret"];
             if (string.IsNullOrEmpty(secretKey))
@@ -23,7 +23,8 @@ namespace UsersAPI.Security
             {
                 Subject = new ClaimsIdentity(
                     [
-                        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString())
+                        new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                        new Claim(ClaimTypes.Role, role)
                     ]),
                 Expires = DateTime.UtcNow.AddHours(60),
                 SigningCredentials = credentials,
