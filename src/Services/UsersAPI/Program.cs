@@ -32,7 +32,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("https://twoja-aplikacja.vercel.app") // Zmień na swój docelowy URL Vercel
+        policy.WithOrigins("https://imdb-microservices-project.vercel.app", "http://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
