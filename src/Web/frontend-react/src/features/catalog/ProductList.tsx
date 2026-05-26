@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "./catalogApi";
 import { useCartStore } from "../../store/useCartStore";
-import { Plus, Search, X } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 
 const CATEGORIES = [
   "Wszystkie",

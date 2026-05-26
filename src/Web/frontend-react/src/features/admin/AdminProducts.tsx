@@ -19,10 +19,11 @@ export const AdminProducts = () => {
     weight: 0
   });
 
-  const { data: products, isLoading, isError } = useQuery({
+  const { data: products, isLoading } = useQuery({
     queryKey: ["products", page],
-    queryFn: () => getProducts({ pageNumber: page, pageSize: 10 }),
+    queryFn: () => getProducts({ pageNumber: page, pageSize: 12 }),
   });
+
 
   const addMutation = useMutation({
     mutationFn: addProduct,

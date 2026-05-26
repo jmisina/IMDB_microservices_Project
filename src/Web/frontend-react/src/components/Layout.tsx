@@ -1,6 +1,6 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
-import { User, Settings, Package, Users, ShoppingBag } from 'lucide-react';
+import { User, Package, Users, ShoppingBag } from 'lucide-react';
 import { CartBadge } from './CartBadge';
 
 export const Layout = () => {
