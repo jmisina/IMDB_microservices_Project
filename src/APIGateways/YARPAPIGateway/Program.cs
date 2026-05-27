@@ -20,9 +20,20 @@ var memConfig = new ConfigurationBuilder()
     .Build();
 
 builder.Services.AddReverseProxy().LoadFromConfig(memConfig);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://imdb-microservices-project.vercel.app", "http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
+app.UseCors("AllowFrontend");
 app.MapReverseProxy();
 
 app.Run();
