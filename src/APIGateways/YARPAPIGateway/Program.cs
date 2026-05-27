@@ -33,6 +33,16 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.Use((context, next) =>
+{
+    var proxyFeature = context.GetReverseProxyFeature();
+    if (proxyFeature != null)
+    {
+        Console.WriteLine($"Proxying request to cluster: {proxyFeature.RouteConfig.ClusterId}");
+    }
+    return next();
+});
+
 app.UseCors("AllowFrontend");
 app.MapReverseProxy();
 
