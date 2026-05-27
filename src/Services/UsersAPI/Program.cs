@@ -46,7 +46,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("https://imdb-microservices-project.vercel.app", "http://localhost:5173")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 builder.Services.AddSingleton<TokenProvider>();
