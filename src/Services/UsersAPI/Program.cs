@@ -9,6 +9,10 @@ using UsersAPI.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Port binding for cloud hosting
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://+:{port}");
+
 // Load .env file
 var root = Directory.GetCurrentDirectory();
 var dotenv = Path.Combine(root, ".env");

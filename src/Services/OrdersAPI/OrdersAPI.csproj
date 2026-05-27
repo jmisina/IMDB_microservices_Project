@@ -8,9 +8,12 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <WarningsAsErrors>false</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
+	  
+	<PackageReference Include="Marten" Version="7.37.0" />
 	  
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
 	  
