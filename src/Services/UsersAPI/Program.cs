@@ -25,6 +25,14 @@ if (File.Exists(dotenv))
 // Re-sync configuration to pick up newly set environment variables
 builder.Configuration.AddEnvironmentVariables();
 
+var connectionString = builder.Configuration.GetConnectionString("Database") ?? "";
+connectionString = connectionString
+    .Replace("${DB_HOST}", builder.Configuration["DB_HOST"])
+    .Replace("${DB_PORT}", builder.Configuration["DB_PORT"] ?? "5432")
+    .Replace("${DB_NAME}", builder.Configuration["DB_NAME"])
+    .Replace("${DB_USER}", builder.Configuration["DB_USER"])
+    .Replace("${DB_PASS}", builder.Configuration["DB_PASS"]);
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -43,7 +51,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Database"));
+    options.UseNpgsql(connectionString);
 });
 
 builder.Services.AddAuthorization(options =>

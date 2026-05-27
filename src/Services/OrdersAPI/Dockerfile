@@ -1,29 +1,18 @@
-# Zobacz https://aka.ms/customizecontainer, aby dowiedzieć się, jak dostosować kontener debugowania i jak program Visual Studio używa tego pliku Dockerfile do kompilowania obrazów w celu szybszego debugowania.
-
-# Ten etap jest używany podczas uruchamiania z programu VS w trybie szybkim (domyślnie dla konfiguracji debugowania)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8280
-EXPOSE 8281
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
 
-
-# Ten etap służy do kompilowania projektu usługi
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/OrdersAPI/OrdersAPI.csproj", "Services/OrdersAPI/"]
-RUN dotnet restore "./Services/OrdersAPI/OrdersAPI.csproj"
-COPY . .
-WORKDIR "/src/Services/OrdersAPI"
-RUN dotnet build "./OrdersAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+COPY ["src/", "src/"]
+RUN dotnet restore "src/Services/OrdersAPI/OrdersAPI.csproj"
+RUN dotnet build "src/Services/OrdersAPI/OrdersAPI.csproj" -c Release -o /app/build
 
-# Ten etap służy do publikowania projektu usługi do skopiowania do etapu końcowego
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./OrdersAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "src/Services/OrdersAPI/OrdersAPI.csproj" -c Release -o /app/publish
 
-# Ten etap jest używany w środowisku produkcyjnym lub w przypadku uruchamiania z programu VS w trybie regularnym (domyślnie, gdy nie jest używana konfiguracja debugowania)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
