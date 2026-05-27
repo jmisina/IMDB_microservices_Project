@@ -93,6 +93,8 @@ builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration.GetConnection
 
 var app = builder.Build();
 
+app.MapGet("/debug", () => "ProductsAPI is working");
+
 app.MapCarter();
 
 app.UseAuthentication();
