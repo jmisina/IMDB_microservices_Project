@@ -17,6 +17,8 @@ json = json.Replace("${PRODUCTS_API_URL}", builder.Configuration["PRODUCTS_API_U
            .Replace("${USERS_API_URL}", builder.Configuration["USERS_API_URL"] ?? "")
            .Replace("${ORDERS_API_URL}", builder.Configuration["ORDERS_API_URL"] ?? "");
 
+Console.WriteLine($"DEBUG: Config JSON after replacement: {json}");
+
 // Load modified config from memory
 var memConfig = new ConfigurationBuilder()
     .AddJsonStream(new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(json)))
