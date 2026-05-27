@@ -1,3 +1,4 @@
+using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.Model;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,10 +38,11 @@ var app = builder.Build();
 
 app.Use((context, next) =>
 {
-    var route = context.GetEndpoint()?.Metadata.GetMetadata<RouteConfig>();
-    if (route != null)
+    var proxyFeature = context.GetReverseProxyFeature();
+    if (proxyFeature != null)
     {
-        Console.WriteLine($"Proxying request to cluster: {route.ClusterId}");
+        var destination = proxyFeature.AvailableDestinations.FirstOrDefault();
+        Console.WriteLine($"Proxying request to: {destination?.Model.Config.Address}");
     }
     return next();
 });
