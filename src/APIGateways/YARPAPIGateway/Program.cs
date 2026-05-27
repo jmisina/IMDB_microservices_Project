@@ -1,3 +1,5 @@
+using Yarp.ReverseProxy.Model;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Port binding for cloud hosting
@@ -35,10 +37,10 @@ var app = builder.Build();
 
 app.Use((context, next) =>
 {
-    var proxyFeature = context.GetReverseProxyFeature();
-    if (proxyFeature != null)
+    var route = context.GetEndpoint()?.Metadata.GetMetadata<RouteConfig>();
+    if (route != null)
     {
-        Console.WriteLine($"Proxying request to cluster: {proxyFeature.RouteConfig.ClusterId}");
+        Console.WriteLine($"Proxying request to cluster: {route.ClusterId}");
     }
     return next();
 });
