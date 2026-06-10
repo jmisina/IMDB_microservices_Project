@@ -62,8 +62,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddHttpClient("ProductsAPI", client =>
 {
-    var baseAddress = builder.Configuration["ProductsApiSettings:BaseAddress"] ?? "http://productsapi:8080";
-    client.BaseAddress = new Uri(baseAddress.Replace("${PRODUCTS_API_BASE_ADDRESS}", builder.Configuration["PRODUCTS_API_BASE_ADDRESS"] ?? "http://productsapi:8080"));
+    client.BaseAddress = new Uri(builder.Configuration["ProductsApiSettings:BaseAddress"] ?? "http://productsapi:8080");
 });
 
 
